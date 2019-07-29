@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_margin="10dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+
+        android:id="@+id/mealimg"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+
+        />
+
+    <TextView
+        android:id="@+id/mealname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+android:layout_gravity="center"
+        android:text="mealname"
+        android:textSize="18dp"
+        android:textColor="#D3E30425"
+        android:fontFamily="@font/righteous"
+        android:layout_marginLeft="10dp"
+
+        />
+
+</LinearLayout>
