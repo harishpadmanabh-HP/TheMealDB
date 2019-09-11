@@ -2,6 +2,7 @@ package com.hp.themealdb.Retro;
 
 import com.hp.themealdb.Models.CategoryFilterModel;
 import com.hp.themealdb.Models.CategoryModel;
+import com.hp.themealdb.Models.FilterByArea;
 import com.hp.themealdb.Models.MealDetailModel;
 import com.hp.themealdb.Models.RandomMealModel;
 
@@ -22,5 +23,11 @@ public interface Apis {
 
     @GET("search.php?")
     Call<MealDetailModel> MEAL_DETAIL_MODEL_CALL(@Query("s")String mealname);
+
+    @GET("filter.php?")
+    Call<FilterByArea> FILTER_BY_AREA_CALL(@Query("a")String area);
+
+
+
 
 }

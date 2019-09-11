@@ -34,6 +34,8 @@
 
     <SearchView
 
+        android:iconifiedByDefault="false"
+        android:queryHint="Search meal area/name"
         android:id="@+id/searchView"
         android:layout_width="312dp"
         android:layout_height="48dp"

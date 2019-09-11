@@ -1,6 +1,7 @@
 package com.hp.themealdb;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,12 +13,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.harishpadmanabh.apppreferences.AppPreferences;
 import com.hp.themealdb.Models.CategoryModel;
+import com.hp.themealdb.Models.FilterByArea;
 import com.hp.themealdb.Models.RandomMealModel;
 import com.hp.themealdb.Retro.Retro;
 
@@ -32,7 +39,10 @@ RecyclerView categorylist;
     List<CategoryModel.CategoriesBean> categoryModelList;
     ImageView randomimg;
     TextView randommeal,randommealdesc;
+    SearchView searchView;
     AppPreferences appPreferences;
+    Boolean is_desc_visible=true;
+
 
 
     @Override
@@ -43,10 +53,94 @@ RecyclerView categorylist;
         appPreferences = AppPreferences.getInstance(this, getResources().getString(R.string.app_name));
 
 
+        searchView=findViewById(R.id.searchView);
         randomimg=findViewById(R.id.randommealimage);
         randommeal=findViewById(R.id.randommeal);
 
+
         randommealdesc=findViewById(R.id.randommealdesc);
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                randommealdesc.setVisibility(View.INVISIBLE);
+                is_desc_visible=false;
+
+            }
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(final String s) {
+
+                randommealdesc.setVisibility(View.INVISIBLE);
+                is_desc_visible=false;
+
+               // Toast.makeText(MainActivity.this, "onQueryTextSubmit"+s, Toast.LENGTH_SHORT).show();
+
+                LayoutInflater inflat=LayoutInflater.from(MainActivity.this);
+                final View cuslay=inflat.inflate(R.layout.alertradio,null);
+
+                final RadioGroup radioGroup=cuslay.findViewById(R.id.radiogrp);
+                Button search=cuslay.findViewById(R.id.searchalert);
+
+                AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+                builder.setView(cuslay);
+                final AlertDialog alert=builder.create();
+                alert.show();
+                search.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int selectedId=radioGroup.getCheckedRadioButtonId();
+
+//                         RadioButton  radioSexButton=(RadioButton)findViewById(selectedId);
+//                        Toast.makeText(MainActivity.this,selectedId,Toast.LENGTH_SHORT).show();
+
+                        RadioButton area=cuslay.findViewById(R.id.radioarea);
+                        RadioButton name=cuslay.findViewById(R.id.radioname);
+
+                        if(area.isChecked())
+                        {
+                            Toast.makeText(MainActivity.this, "area", Toast.LENGTH_SHORT).show();
+
+                            appPreferences.removeKey("filtermeal");
+                            appPreferences.saveData("filtermeal","area");
+                            appPreferences.saveData("searcharea",s);
+                            startActivity(new Intent(MainActivity.this,SearchResult.class));
+
+                        }
+                        else if (name.isChecked())
+                        {
+                            Toast.makeText(MainActivity.this, "name", Toast.LENGTH_SHORT).show();
+
+                            appPreferences.removeKey("filtermeal");
+                            appPreferences.saveData("filtermeal","name");
+                            appPreferences.saveData("searchname",s);
+
+                        }
+                        else{
+                            Toast.makeText(MainActivity.this, "nothing selected", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                randommealdesc.setVisibility(View.INVISIBLE);
+                is_desc_visible=false;
+
+                //for search with each letter
+                // Toast.makeText(MainActivity.this, "onQueryTextChange"+s, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+
 
 
         Retro retro=new Retro();
@@ -80,6 +174,7 @@ RecyclerView categorylist;
 
 
     }
+
 
     private void loadRandomMeals() {
         Retro retro=new Retro();
@@ -179,5 +274,16 @@ Context context;
                 catname=itemView.findViewById(R.id.singletextname);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(!is_desc_visible)
+            randommealdesc.setVisibility(View.VISIBLE);
+        else if(is_desc_visible)
+            super.onBackPressed();
+
+
+
     }
 }
