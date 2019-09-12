@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/lay"
+android:background="@drawable/gradientbg"
     tools:context=".MealFilter">
 
+    <ImageView
+        android:id="@+id/mealcat"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:translationZ="50dp"
         android:id="@+id/mealsrv"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         android:layout_width="395dp"
-        android:layout_height="715dp"
+        android:layout_height="match_parent"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -18,4 +28,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/mealcatname"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textSize="30dp"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/spaceit"
+        android:translationZ="30dp"
+
+        android:textColor="#fff"
+        android:text="TextView" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

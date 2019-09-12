@@ -1,13 +1,17 @@
 package com.hp.themealdb;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +26,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.harishpadmanabh.apppreferences.AppPreferences;
 import com.hp.themealdb.Models.CategoryModel;
 import com.hp.themealdb.Models.FilterByArea;
@@ -42,7 +52,7 @@ RecyclerView categorylist;
     SearchView searchView;
     AppPreferences appPreferences;
     Boolean is_desc_visible=true;
-
+    CollapsingToolbarLayout toolbarLayout;
 
 
     @Override
@@ -51,11 +61,13 @@ RecyclerView categorylist;
         setContentView(R.layout.activity_main);
         categorylist=findViewById(R.id.categorylist);
         appPreferences = AppPreferences.getInstance(this, getResources().getString(R.string.app_name));
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+         toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
 
         searchView=findViewById(R.id.searchView);
         randomimg=findViewById(R.id.randommealimage);
-        randommeal=findViewById(R.id.randommeal);
+       // randommeal=findViewById(R.id.randommealimage);
 
 
         randommealdesc=findViewById(R.id.randommealdesc);
@@ -194,8 +206,10 @@ RecyclerView categorylist;
                             .centerCrop()
                             // .placeholder(R.drawable.ic_launcher_foreground)
                             .into(randomimg);
-                    randommeal.setText(randomMealModelList.get(r).getStrMeal());
-                    randommealdesc.setText("Instructions : \n"+randomMealModelList.get(r).getStrInstructions());
+                    toolbarLayout.setTitle(randomMealModelList.get(0).getStrMeal());
+
+                    //randommeal.setText(randomMealModelList.get(r).getStrMeal());
+                    randommealdesc.setText(randomMealModelList.get(r).getStrMeal()+"\n\n\n"+"Instructions : \n"+randomMealModelList.get(r).getStrInstructions());
                 }
 
 
@@ -209,7 +223,11 @@ RecyclerView categorylist;
 
     }
 
-    public void refresh(View view) {
+//    public void refresh(View view) {
+//        loadRandomMeals();
+//    }
+
+    public void refreshm(View view) {
         loadRandomMeals();
     }
 
@@ -234,26 +252,50 @@ Context context;
         @Override
         public void onBindViewHolder(@NonNull CategoryRVVH holder, final int position) {
 
-            Glide
-                    .with(context)
-                    .load(categoryModelList.get(position).getStrCategoryThumb().trim())
-                    //.load("https://www.themealdb.com/images/category/vegetarian.png")
+//            Glide
+//                    .with(context)
+//                    .load(categoryModelList.get(position).getStrCategoryThumb().trim())
+//                    //.load("https://www.themealdb.com/images/category/vegetarian.png")
+//                    .centerCrop()
+//                  // .placeholder(R.drawable.ic_launcher_foreground)
+//                    .into(holder.catimage);
+
+            RequestOptions options = new RequestOptions()
                     .centerCrop()
-                  // .placeholder(R.drawable.ic_launcher_foreground)
-                    .into(holder.catimage);
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                    .priority(Priority.HIGH);
+            Glide.with(context)
+                    .asBitmap()
+                    .load(categoryModelList.get(position).getStrCategoryThumb().trim())
+                    // .load(BASE_POSTER_PATH+model.getPoster_path().trim())
+                    .apply(options)
+                    .into(new BitmapImageViewTarget(holder.catimage) {
+                        @Override
+                        public void onResourceReady(Bitmap bitmap, @Nullable Transition<? super Bitmap> transition) {
+                            super.onResourceReady(bitmap, transition);
+                            Palette.from(bitmap).generate(palette -> setBackgroundColor(palette, holder));
+                        }
+                    });
 
 
             holder.catname.setText(categoryModelList.get(position).getStrCategory());
 
 
+
+
             holder.mview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    appPreferences.saveData("categoryimageurl",categoryModelList.get(position).getStrCategoryThumb().trim());
 
                     appPreferences.saveData("category",categoryModelList.get(position).getStrCategory());
                     startActivity(new Intent(MainActivity.this,MealFilter.class));
                 }
             });
+        }
+        private void setBackgroundColor(Palette palette,CategoryRVVH holder ) {
+            holder.catname.setTextColor(palette.getVibrantColor(MainActivity.this
+                    .getResources().getColor(R.color.black_translucent_60)));
         }
 
         @Override

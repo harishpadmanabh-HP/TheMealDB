@@ -19,7 +19,7 @@
         android:id="@+id/textView"
         android:layout_width="139dp"
         android:layout_height="43dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="48dp"
         android:layout_marginBottom="199dp"
         android:fontFamily="@font/spaceit"
         android:text="MealDB"
@@ -78,78 +78,85 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <ImageView
-        android:id="@+id/randommealimage"
-        android:layout_width="424dp"
-        android:layout_height="155dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categorylist" />
+    <!--<ImageView-->
+        <!--android:id="@+id/randommealimage"-->
+        <!--android:layout_width="424dp"-->
+        <!--android:layout_height="155dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/scrollView2"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/categorylist" />-->
 
-    <TextView
+    <!--<TextView-->
 
-        android:textSize="18dp"
-        android:textColor="#D3E30425"
-        android:fontFamily="@font/righteous"
-        android:id="@+id/randommeal"
-        android:layout_width="79dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/randommealimage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.976"
-        app:layout_constraintStart_toStartOf="@+id/randommealimage"
-        app:layout_constraintTop_toTopOf="@+id/randommealimage"
-        app:layout_constraintVertical_bias="0.867" />
+        <!--android:textSize="18dp"-->
+        <!--android:textColor="#D3E30425"-->
+        <!--android:fontFamily="@font/righteous"-->
+        <!--android:id="@+id/randommeal"-->
+        <!--android:layout_width="79dp"-->
+        <!--android:layout_height="24dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:text="TextView"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/randommealimage"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.976"-->
+        <!--app:layout_constraintStart_toStartOf="@+id/randommealimage"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/randommealimage"-->
+        <!--app:layout_constraintVertical_bias="0.867" />-->
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="395dp"
-        android:layout_height="216dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:padding="10dp"
+    <!--<ScrollView-->
+        <!--android:id="@+id/scrollView2"-->
+        <!--android:layout_width="395dp"-->
+        <!--android:layout_height="216dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:padding="10dp"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent">-->
+
+
+        <!--<TextView-->
+            <!--android:id="@+id/randommealdesc"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:fontFamily="@font/righteous"-->
+
+            <!--android:text="meals desc"-->
+            <!--android:textColor="#D3E30425"-->
+            <!--android:textSize="18dp" />-->
+
+    <!--</ScrollView>-->
+    <LinearLayout
+        android:layout_width="421dp"
+        android:layout_height="410dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categorylist">
 
+        <include layout="@layout/activity_random_scroll"/>
+    </LinearLayout>
 
-        <TextView
-            android:id="@+id/randommealdesc"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/righteous"
-
-            android:text="meals desc"
-            android:textColor="#D3E30425"
-            android:textSize="18dp" />
-
-    </ScrollView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:clickable="true"
-        android:elevation="50dp"
-        android:onClick="refresh"
-        style="@style/Widget.MaterialComponents.FloatingActionButton"
-        app:pressedTranslationZ="20dp"
-        android:foregroundGravity="center"
-        android:backgroundTint="#4E0D3A"
-        app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
-        app:layout_constraintEnd_toEndOf="@+id/scrollView2"
-        app:layout_constraintHorizontal_bias="0.921"
-        app:layout_constraintStart_toStartOf="@+id/scrollView2"
-        app:layout_constraintTop_toTopOf="@+id/scrollView2"
-        app:layout_constraintVertical_bias="0.888"
-        app:srcCompat="@drawable/ic_refresh_black_24dp" />
+    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton-->
+        <!--android:id="@+id/floatingActionButton"-->
+        <!--android:layout_width="50dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:clickable="true"-->
+        <!--android:elevation="50dp"-->
+        <!--android:onClick="refresh"-->
+        <!--style="@style/Widget.MaterialComponents.FloatingActionButton"-->
+        <!--app:pressedTranslationZ="20dp"-->
+        <!--android:foregroundGravity="center"-->
+        <!--android:backgroundTint="#4E0D3A"-->
+        <!---->
+        <!--app:layout_constraintVertical_bias="0.888"-->
+        <!--app:srcCompat="@drawable/ic_refresh_black_24dp" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

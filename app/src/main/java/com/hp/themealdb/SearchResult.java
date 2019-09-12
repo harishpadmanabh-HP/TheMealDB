@@ -153,6 +153,19 @@ public class SearchResult extends AppCompatActivity {
 
             holder.mealname.setText(filterByAreaList.get(position).getStrMeal());
 
+            holder.mview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    appPreferences.saveData("searchmealname",filterByAreaList.get(position).getStrMeal());
+                    appPreferences.saveData("searchmealid",filterByAreaList.get(position).getIdMeal());
+
+
+                    startActivity(new Intent(SearchResult.this,SearchFilterScrolling.class));
+
+                }
+            });
+
 
 
         }
